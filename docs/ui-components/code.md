@@ -150,13 +150,44 @@ graph TD;
 
 ### Using a local mermaid library
 
-In order to use a local version of the mermaid library instead of one provided by jsDelivr, you can specify a `path` key in the mermaid configuration instead of a `version` key.
+To load a local version of mermaid, also use the `path` key to specify the location of the library; e.g.
 
 ```yaml
 mermaid:
-  # To load mermaid from a local file use the `path` key to specify the location of the library instead; e.g.
-  path: "/assets/js/mermaid.min.js"
+  version: "10.1.0"
+  # for (v10+)
+  path: "/assets/js/mermaid.esm.min.mjs"
+  # for (<v10):
+  # path: "/assets/js/mermaid.min.js"
+  # Note: copy both `mermaid.esm.min.mjs` (v10+) or `mermaid.min.js` (<v10) and the associated
+  # `.map` file from the specified version of `mermaid/dist` to `/assets/js/`.
 ```
+
+For mermaid versions `>=10`, this file is imported directly as an ESM module (rather than as a plain `<script>` tag); users should use the `mermaid.esm.min.mjs` file. In contrast, for mermaid versions `<10`, this file is loaded as a script tag; it should be a standalone CJS file (i.e. `mermaid.min.js`).
+
+{: .warning }
+Mermaid versions `10.0` - `10.1` (and possibly, future releases) still encode relative imports in `mermaid.esm.min.mjs`. Local users must copy *all* of the contents of the `dist` folder to the specified path (preserving the relative location of the files). Just the Docs is actively monitoring mermaid releases; an upstream fix is planned.
+
+### Using mermaid with AsciiDoc
+
+Users of [AsciiDoc](https://asciidoc.org/) (e.g. via [jekyll-asciidoc](https://github.com/asciidoctor/jekyll-asciidoc)) may need additional configuration to use mermaid.
+
+By default, AsciiDoc generates HTML markup that mermaid cannot properly parse. The simplest way to resolve this is to use a [passthrough block](https://docs.asciidoctor.org/asciidoc/latest/pass/pass-block/):
+{% highlight asciidoc %}
+++++
+<pre class="language-mermaid">
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+</pre>
+++++
+{% endhighlight %}
+
+Alternatively, community member [@flyx](https://.github.com/flyx) has contributed a Ruby extension that does not require extra markup. The extension is available [as a GitHub Gist](https://gist.github.com/flyx/9fff080cf4edc95d495bc661a002232c). Thank you to [@flyx](https://.github.com/flyx)!
+
+The [asciidoctor-diagram](https://docs.asciidoctor.org/diagram-extension/latest/) extension which also supports mermaid is not recommended for use with Just the Docs, since it requires separate configuration e.g. for theming, and is known to not be trivial to set up.
 
 ## Copy button
 {: .d-inline-block }
@@ -171,4 +202,4 @@ The copy button for code blocks can be enabled or disabled via the `enable_copy_
 enable_copy_code_button: true
 ```
 
-Note that this feature requires JavaScript; if JavaScript is disabled in the browser, this feature will not work.
+Note that this feature requires JavaScript; if JavaScript is disabled in the browser, this feature will not work. In addition, this feature uses `navigator.clipboard`, which is only available in [secure contexts](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts) (such as over HTTPS). If the site is viewed in an insecure context, the copy button will not work ([relevant issue: #1202](https://github.com/just-the-docs/just-the-docs/issues/1202)).
