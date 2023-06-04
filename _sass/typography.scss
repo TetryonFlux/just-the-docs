@@ -6,17 +6,25 @@ h1,
   @include fs-8;
 
   font-weight: 300;
+
+  padding-bottom: 0.5em;
 }
 
 h2,
 .text-beta,
 #toctitle {
   @include fs-6;
+
+  padding-bottom: 1em;
 }
 
 h3,
 .text-gamma {
   @include fs-5;
+
+  padding-bottom: 1em;
+
+  padding-left: 1em;
 }
 
 h4,
@@ -26,6 +34,8 @@ h4,
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+
+  padding-bottom: 1em;
 }
 
 h4 code {
@@ -52,6 +62,7 @@ h6,
 
 .text-left {
   text-align: left !important;
+
 }
 
 .text-center {

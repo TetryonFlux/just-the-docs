@@ -1,10 +1,19 @@
 <div class="side-bar">
   <div class="site-header" role="banner">
-    <a href="{{ '/' | relative_url }}" class="site-title lh-tight">{% include title.html %}</a>
+    {% if site.logo %}
+      <a href="{{ '/' | relative_url }}" class="site-title">
+        <img src="{{ site.logo | relative_url }}" alt="{{ site.title | escape }}" class="logo-image">
+        <span class="space"></span>
+        <span class="site-title-text">{{ site.title | escape }}</span>
+      </a>
+    {% else %}
+      <a href="{{ '/' | relative_url }}" class="site-title lh-tight">{% include title.html %}</a>
+    {% endif %}
     <button id="menu-button" class="site-button" aria-label="Open menu">
       <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
-    </a>
+    </button>
   </div>
+
   <nav aria-label="Main" id="site-nav" class="site-nav">
     {% assign pages_top_size = site.html_pages
           | where_exp:"item", "item.title != nil"

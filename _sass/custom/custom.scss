@@ -1,1 +1,42 @@
 // custom SCSS (or CSS) goes here
+
+
+// Attempting to adjust break gap size, doesn't seem to work though
+.custom-br {
+    margin-bottom: 0.5em; /* Adjust the value as needed */
+  }
+
+ // .space {
+    //margin-left: 5px; /* Adjust the value as needed */
+   // width: 10px;
+ // }
+  
+ // .site-title-text {
+ //    font-size: 20px; /* Adjust the value as needed */
+ //  }
+  
+ // .logo-image {
+    /* Add your desired styles for the logo image */
+  //}
+
+  
+// adds a space between the sidebar image and title text
+  .site-title .space {
+    margin-left: 10px; /* Adjust the value as needed */
+  }
+  
+  .center-image
+  {
+      margin: 0 auto;
+      display: block;
+  }
+
+  .figure {
+    @include fs-3;
+    text-align: center;
+  }
+
+  .body-3 {
+    padding-left: 1em;
+  }
+
